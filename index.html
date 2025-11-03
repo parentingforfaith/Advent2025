@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Advent Calendar</title>
+  <!-- Fonts: Splash, Lato (Black) and Source Sans Pro (Regular) -->
+  <link href="https://fonts.googleapis.com/css2?family=Splash&family=Lato:wght@900&family=Source+Sans+Pro:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="stars-container" aria-hidden="true">
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+  </div>
+  <main class="container">
+    <header>
+      <h1>Questions for Advent</h1>
+      <p class="subtitle">Click a day to reveal a family conversation starter.</p>
+    </header>
+
+    <section id="calendar" class="calendar" aria-label="Advent calendar">
+      <!-- Day tiles inserted by JS -->
+    </section>
+    <div class="progress">Progress: <span id="progressCount">0</span>/24</div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content">
+      <button id="closeBtn" class="close" aria-label="Close">×</button>
+      <div class="modal-body">
+        <img id="modalImage" class="modal-image" alt="Decorative image" src="" />
+        <div class="modal-right">
+          <h2 id="modalTitle">Day</h2>
+          <p id="modalQuestion">Question placeholder</p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="markDone">Mark as done</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <a href="https://parentingforfaith.org" target="_blank" rel="noopener noreferrer">
+        <img src="Parenting for Faith logo_Lozenge.png" alt="Parenting for Faith" class="footer-logo">
+      </a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
