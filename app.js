@@ -24,7 +24,7 @@
   function saveRevealed(arr){ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
 
   function isUnlocked(day){
-    if(day===1) return true; // day 1 accessible from start
+    // No special-case: day 1 should follow the same unlock rules as the others
     const now = simulatedNow || new Date();
     const year = now.getFullYear();
     // months are 0-indexed; December = 11
@@ -120,16 +120,40 @@
 
     // set question and image from loaded questions.json if available
     const img = document.getElementById('modalImage');
+    const embedContainer = document.getElementById('modalEmbed');
     if(questionsData && questionsData[day-1]){
       modalQuestion.textContent = questionsData[day-1].question || questions[day-1] || 'Placeholder question';
       if(img) img.src = questionsData[day-1].image || '';
       if(img) img.alt = questionsData[day-1].alt || `Image for day ${day}`;
       console.log(`openModal: using questions.json for day ${day}`);
+      // optional embed HTML or extra link support
+      if(embedContainer){
+        // support both `embedHtml` (raw HTML string) and `extraLink` (URL)
+        const embedHtml = questionsData[day-1].embedHtml || questionsData[day-1].embed || '';
+        const extraLink = questionsData[day-1].extraLink || questionsData[day-1].link || '';
+        if(embedHtml){
+          // user-supplied HTML embed (e.g. iframe) — inserted as-is
+          embedContainer.innerHTML = embedHtml;
+          embedContainer.style.display = 'block';
+          embedContainer.setAttribute('aria-hidden','false');
+        } else if(extraLink){
+          // show a simple link to extra content
+          const safeHref = extraLink;
+          embedContainer.innerHTML = `<p class=\"extra-link\"><a href=\"${safeHref}\" target=\"_blank\" rel=\"noopener noreferrer\">Additional content</a></p>`;
+          embedContainer.style.display = 'block';
+          embedContainer.setAttribute('aria-hidden','false');
+        } else {
+          embedContainer.innerHTML = '';
+          embedContainer.style.display = 'none';
+          embedContainer.setAttribute('aria-hidden','true');
+        }
+      }
     } else {
       modalQuestion.textContent = questions[day-1] || 'Placeholder question';
       if(img) img.src = '';
       if(img) img.alt = '';
       console.log(`openModal: using placeholder for day ${day}`);
+      if(embedContainer){ embedContainer.innerHTML = ''; embedContainer.style.display='none'; embedContainer.setAttribute('aria-hidden','true'); }
     }
     modal.setAttribute('aria-hidden','false');
     // remove any closing state
